@@ -1,11 +1,10 @@
-create or replace function  calculate_salary (p_date date,p_sal number,p_empno number) return number
-is
+create function  calculate_salary (p_sal number,p_date date,p_empno number) return number is
 
 v_totalsal number(20);
 v_empno number(20);
 
 begin
-select empno,((sal*(months_between(trunc(sysdate),p_date)))/(trunc(sysdate) - p_date))*(trunc(sysdate) - p_date)
+select ((sal*(months_between(trunc(sysdate),p_date)))/(trunc(sysdate) - p_date))*(trunc(sysdate) - p_date),empno
 into v_totalsal,v_empno
 from scott.emp
 where empno = p_empno;
@@ -14,5 +13,5 @@ return v_totalsal;
 end;
 
 
-select  calculate_salary('01-OCT-2022',2850,7698)
+select  calculate_salary(2850,'10-OCT-2022',7698)
 from dual
